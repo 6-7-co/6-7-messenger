@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: messenger-config
+  namespace: messenger
+data:
+  NODE_ENV: production
+  PORT: "3000"
+  HOST: 0.0.0.0
+  JWT_ACCESS_TTL: 15m
+  JWT_REFRESH_TTL: 30d
+  CORS_ORIGIN: "null"
+  UPLOAD_DIR: /data/uploads
+  MAX_UPLOAD_MB: "25"
+  TRUST_PROXY: "true"
