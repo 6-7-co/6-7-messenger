@@ -1,8 +1,36 @@
 import { app, BrowserWindow, ipcMain, session, shell } from 'electron';
+import fs from 'fs';
 import path from 'path';
 
 const isDev = !app.isPackaged;
-const apiBase = process.env.MESSENGER_API_URL || 'http://localhost:3000';
+
+function resolveApiBase(): string {
+  const fromEnv = process.env.MESSENGER_API_URL;
+  if (fromEnv) return fromEnv;
+
+  const candidates = [
+    path.join(process.resourcesPath ?? '', 'config.json'),
+    path.join(app.getPath('userData'), 'config.json'),
+    path.join(app.getAppPath(), 'config.json'),
+  ];
+
+  for (const file of candidates) {
+    try {
+      if (fs.existsSync(file)) {
+        const parsed = JSON.parse(fs.readFileSync(file, 'utf-8')) as { apiBase?: string };
+        if (parsed.apiBase && typeof parsed.apiBase === 'string') {
+          return parsed.apiBase;
+        }
+      }
+    } catch {
+      void 0;
+    }
+  }
+
+  return 'http://localhost:3000';
+}
+
+const apiBase = resolveApiBase();
 
 function createWindow() {
   const win = new BrowserWindow({
