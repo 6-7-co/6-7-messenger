@@ -6,7 +6,8 @@ out/
 .env
 .env.local
 *.log
-uploads/
+/uploads/
+apps/api/uploads/
 .DS_Store
 Thumbs.db
 .idea/
