@@ -1,0 +1,23 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Private two-person messenger with photos and pinned messages",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "postinstall": "npm run build -w @messenger/shared",
+    "build": "npm run build -w @messenger/shared && npm run build -w @messenger/api && npm run build -w @messenger/desktop",
+    "dev:api": "npm run start:dev -w @messenger/api",
+    "dev:desktop": "npm run dev -w @messenger/desktop",
+    "db:generate": "npm run prisma:generate -w @messenger/api",
+    "db:migrate": "npm run prisma:migrate -w @messenger/api",
+    "db:deploy": "npm run prisma:deploy -w @messenger/api",
+    "db:push": "npm run prisma:push -w @messenger/api"
+  }
+}
