@@ -99,7 +99,7 @@ export class StorageService {
       s3.endpoint.startsWith('http') ? s3.endpoint : `https://${s3.endpoint}`,
     );
     const host = endpoint.host;
-    const path = `/${key}`;
+    const path = `/${bucket}/${key}`;
     const method = 'PUT';
     const region = s3.region;
     const service = 's3';
